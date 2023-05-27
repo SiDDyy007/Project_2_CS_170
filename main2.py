@@ -32,16 +32,35 @@ def test_classifier(data, instance, current_set_features):
                 nearest_neighbor_location = k
     return data[nearest_neighbor_location, 0]
 
+def normalize_data(data):
+    """
+    This function normalizes the data to have zero mean and unit variance.
+    """
+    # We only normalize the features (not the labels), so we use data[:, 1:] 
+    mean = np.mean(data[:, 1:], axis=0)
+    std = np.std(data[:, 1:], axis=0)
+
+    # Avoid division by zero
+    std[std == 0] = 1
+
+    # Normalize features
+    data[:, 1:] = (data[:, 1:] - mean) / std
+
+    return data
+
 def get_input():
     print ("Which dataset would you like to use?\n1. Small dataset\n2. Large dataset\nEnter choice (1 or 2): ")
     dataset_choice = input()
     if dataset_choice == '1':
         data = np.loadtxt(r'small-test-dataset.txt')
+        
     elif dataset_choice == '2':
         data = np.loadtxt(r'large-test-dataset-1.txt')
     else:
         print("Invalid choice. Please enter 1 for small dataset or 2 for large dataset.")
         exit(1)
+    # Normalizing before training or testing
+    data = normalize_data(data)
     feature_input(data)
     
 def feature_input(data):
