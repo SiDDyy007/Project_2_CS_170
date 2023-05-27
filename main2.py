@@ -1,6 +1,9 @@
+import time
 import numpy as np
 
 def train_classifier(data, current_set_features):
+    start_time = time.time()
+
     number_correctly_classified = 0
     for i in range(data.shape[0]):
         object_to_classify = data[i, current_set_features]
@@ -18,9 +21,16 @@ def train_classifier(data, current_set_features):
         if label_object_to_classify == nearest_neighbor_label:
             number_correctly_classified += 1
     accuracy = number_correctly_classified / data.shape[0]
+
+    end_time = time.time()
+    elapsed_time = round(end_time - start_time, 4)
+
+    print(f'Time taken to train the classifier: {elapsed_time*100} milliseconds')
     return accuracy
 
+
 def test_classifier(data, instance, current_set_features):
+    start_time = time.time()
     object_to_classify = data[instance, current_set_features]
     nearest_neighbor_distance = np.inf
     nearest_neighbor_location = np.inf
@@ -30,6 +40,10 @@ def test_classifier(data, instance, current_set_features):
             if distance < nearest_neighbor_distance:
                 nearest_neighbor_distance = distance
                 nearest_neighbor_location = k
+    end_time = time.time()
+    elapsed_time = round(end_time - start_time, 4)
+
+    print(f'Time taken to test the classifier: {elapsed_time*100} milliseconds')
     return data[nearest_neighbor_location, 0]
 
 def normalize_data(data):
@@ -64,16 +78,23 @@ def get_input():
     feature_input(data)
     
 def feature_input(data):
-    current_set_features = input("Please enter the indices of the features you would like to train on, separated by commas: ")
-    current_set_features = [int(x) for x in current_set_features.split(',')]
+    choice = input("Would you like to specify a subset of features?\n1. Yes\n2. No\n-> ")
+    if choice == '1':
+        current_set_features = input("Please enter the indices of the features you would like to train on, separated by commas: ")
+        current_set_features = [int(x) for x in current_set_features.split(',')]
+    else:
+        current_set_features = list(range(1, data.shape[1]))  # Use all features
+
     accuracy = train_classifier(data, current_set_features)
-    print(f'\nThe accuracy of the classifier using the given subset of features is: {accuracy * 100}%')
-    classify = input("Do you want to test the classifier using an instance point?\n1. Yes\n2. No: ")
+    print(f'\nThe accuracy of the classifier using {"all" if choice != "1" else "the given subset of"} features is: {accuracy * 100}%')
+    
+    classify = input("Do you want to test the classifier using an instance point?\n1. Yes\n2. No\n-> ")
     if classify == '1':
         instance = int(input("Please specify the instance index you would like to classify: "))
         predicted_label = test_classifier(data, instance, current_set_features)
         print(f'\nThe predicted label for the {instance+1}th object is: {predicted_label}')
     else:
         print("Thank you! Program Done!")
+
 
 get_input()
