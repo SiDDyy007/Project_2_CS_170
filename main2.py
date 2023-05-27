@@ -87,7 +87,13 @@ def feature_input(data):
 
     accuracy = train_classifier(data, current_set_features)
     print(f'\nThe accuracy of the classifier using {"all" if choice != "1" else "the given subset of"} features is: {accuracy * 100}%')
-    
+    addFeature = input("Would you like to add a new feature to the classifer?\n1. Yes\n2. No\n->")
+    if addFeature == '1':
+        newFeature = int(input("Enter the feature to be added\n->"))
+        current_set_features += [newFeature]
+        accuracy = train_classifier(data, current_set_features)
+        print(f'\nThe accuracy of the classifier after adding feature - {newFeature} is: {accuracy * 100}%')
+
     classify = input("Do you want to test the classifier using an instance point?\n1. Yes\n2. No\n-> ")
     if classify == '1':
         instance = int(input("Please specify the instance index you would like to classify: "))
