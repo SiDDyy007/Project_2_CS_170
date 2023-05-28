@@ -105,36 +105,48 @@ class Validator:
 
 
 def start():
-        choice = input("What would you like to do?\n1. Test the classifier using a given subset of features (Validator Class)\n2. Predict the class label for a given instance (Classifier Class)\nEnter choice (1 or 2): ")
+    while True:
+        choice = input("\nWhat would you like to do?\n1. Test the classifier using a given subset of features (Validator Class)\n2. Predict the class label for a given instance (Classifier Class)\nPlease enter choice (1 or 2), or 'q' to quit: ")
+        
         if choice == '1':
             feature_subset = feature_input()
             data = get_dataset_input()
-            classifier = Validator(data, feature_subset)
-            accuracy = classifier.validate()
+            if data is None:
+                continue
+            validator = Validator(data, feature_subset)
+            accuracy = validator.validate()
             print(f'\nThe accuracy of the classifier using the given subset of features is: {accuracy * 100}%')
         elif choice == '2':
             data = get_dataset_input()
+            if data is None:
+                continue
             instance = int(input("Please specify the instance ID (Starting from 1) you would like to classify: "))            
             classifier = NN_Classifier(data)
             predicted_label = classifier.test(instance-1)
             print(f'\nThe predicted label for the {instance}th instance ID is: {predicted_label}')
+        elif choice.lower() == 'q':
+            print("Exiting the program. Goodbye!")
+            break
         else:
             print("Invalid choice. Please enter 1 to test the classifier or 2 to predict an instance.")
 
 def get_dataset_input():
-    print ("Which dataset would you like to use?\n1. Small dataset\n2. Large dataset\nEnter choice (1 or 2): ")
-    dataset_choice = input()
-    if dataset_choice == '1':
-        data = np.loadtxt(r'small-test-dataset.txt')
-    elif dataset_choice == '2':
-        data = np.loadtxt(r'large-test-dataset-1.txt')
-    else:
-        print("Invalid choice. Please enter 1 for small dataset or 2 for large dataset.")
-        exit(1)
-    return data
+    while True:
+        print ("\nWhich dataset would you like to use?\n1. Small dataset\n2. Large dataset\nEnter choice (1 or 2), or 'q' to quit: ")
+        dataset_choice = input()
+        if dataset_choice == '1':
+            data = np.loadtxt(r'small-test-dataset.txt')
+            return data
+        elif dataset_choice == '2':
+            data = np.loadtxt(r'large-test-dataset-1.txt')
+            return data
+        elif dataset_choice.lower() == 'q':
+            return None
+        else:
+            print("Invalid choice. Please enter 1 for small dataset or 2 for large dataset.")
 
 def feature_input():
-    current_set_features = input("Please enter the features you would like to train on, separated by commas: ")
+    current_set_features = input("\nPlease enter the features you would like to train on, separated by commas: ")
     current_set_features = [int(x) for x in current_set_features.split(',')]
     return current_set_features
 
