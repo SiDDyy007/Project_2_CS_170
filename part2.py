@@ -104,31 +104,31 @@ class Validator:
 
 
 
-def start():
-    while True:
-        choice = input("\nWhat would you like to do?\n1. Test the classifier using a given subset of features (Validator Class)\n2. Predict the class label for a given instance (Classifier Class)\nPlease enter choice (1 or 2), or 'q' to quit: ")
+# # def start():
+#     while True:
+#         choice = input("\nWhat would you like to do?\n1. Test the classifier using a given subset of features (Validator Class)\n2. Predict the class label for a given instance (Classifier Class)\nPlease enter choice (1 or 2), or 'q' to quit: ")
         
-        if choice == '1':
-            feature_subset = feature_input()
-            data = get_dataset_input()
-            if data is None:
-                continue
-            validator = Validator(data, feature_subset)
-            accuracy = validator.validate()
-            print(f'\nThe accuracy of the classifier using the given subset of features is: {accuracy * 100}%')
-        elif choice == '2':
-            data = get_dataset_input()
-            if data is None:
-                continue
-            instance = int(input("Please specify the instance ID (Starting from 1) you would like to classify: "))            
-            classifier = NN_Classifier(data)
-            predicted_label = classifier.test(instance-1)
-            print(f'\nThe predicted label for the {instance}th instance ID is: {predicted_label}')
-        elif choice.lower() == 'q':
-            print("Exiting the program. Goodbye!")
-            break
-        else:
-            print("Invalid choice. Please enter 1 to test the classifier or 2 to predict an instance.")
+#         if choice == '1':
+#             feature_subset = feature_input()
+#             data = get_dataset_input()
+#             if data is None:
+#                 continue
+#             validator = Validator(data, feature_subset)
+#             accuracy = validator.validate()
+#             print(f'\nThe accuracy of the classifier using the given subset of features is: {accuracy * 100}%')
+#         elif choice == '2':
+#             data = get_dataset_input()
+#             if data is None:
+#                 continue
+#             instance = int(input("Please specify the instance ID (Starting from 1) you would like to classify: "))            
+#             classifier = NN_Classifier(data)
+#             predicted_label = classifier.test(instance-1)
+#             print(f'\nThe predicted label for the {instance}th instance ID is: {predicted_label}')
+#         elif choice.lower() == 'q':
+#             print("Exiting the program. Goodbye!")
+#             break
+#         else:
+#             print("Invalid choice. Please enter 1 to test the classifier or 2 to predict an instance.")
 
 def get_dataset_input():
     while True:
@@ -150,6 +150,6 @@ def feature_input():
     current_set_features = [int(x) for x in current_set_features.split(',')]
     return current_set_features
 
-start()
+# start()
 
 
