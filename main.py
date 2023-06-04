@@ -51,7 +51,6 @@ def feature_search_demo(data):
     else:
         print("Invalid choice. Please select either 1 or 2.")
         return
-    # return
     print("Beginning search...")
     search_algorithm(data, features, choice, classifier)
 
@@ -112,6 +111,6 @@ def get_dataset_input():
 def start():
     print("Welcome to Siddhant's Feature Selection Algorithm:")
     data = get_dataset_input()
-    choice = feature_search_demo(data)
+    feature_search_demo(data)
             
 start()
