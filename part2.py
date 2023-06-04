@@ -6,14 +6,15 @@ def euclidean_distance(a, b):
     return sum((e1-e2)**2 for e1, e2 in zip(a,b))**0.5
 
 def normalize_data(data):
-        """
-        This function normalizes the data to have zero mean and unit variance.
-        """
-        mean = np.mean(data[:, 1:], axis=0)
-        std = np.std(data[:, 1:], axis=0)
-        std[std == 0] = 1
-        data[:, 1:] = (data[:, 1:] - mean) / std
-        return data
+    """
+    This function normalizes the data to have zero mean and unit variance.
+    """
+    # return data
+    mean = np.mean(data[:, 1:], axis=0)
+    std = np.std(data[:, 1:], axis=0)
+    std[std == 0] = 1
+    data[:, 1:] = (data[:, 1:] - mean) / std
+    return data
 
 class NN_Classifier:
     def __init__(self, data, feature_subset=None):
