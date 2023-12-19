@@ -36,9 +36,8 @@ def feature_search_demo(data):
     print("Type the number of the algorithm you want to run.")
     print("1. Forward Selection\n2. Backward Elimination")
     
-    choice = int(input())
 
-    if choice == 1:
+    if (choice := int(input())) == 1:
         print("Running Forward Selection")
         classifier = Validator(data, forward_features)
         features = forward_features
@@ -91,8 +90,7 @@ def search_algorithm(data, features, choice, classifier):
 
 def get_dataset_input():
     print ("\nWhich dataset would you like to use?\n1. Small dataset\n2. Large dataset\n3. Personal Small Dataset(20)\n4. Personal Large Dataset(20)")
-    dataset_choice = input()
-    if dataset_choice == '1':
+    if (dataset_choice := input()) == '1':
         data = np.loadtxt(r'small-test-dataset.txt')
         return data
     elif dataset_choice == '2':

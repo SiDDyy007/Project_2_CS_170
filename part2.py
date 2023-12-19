@@ -120,8 +120,7 @@ def get_dataset_input():
     """
     while True:
         print ("\nWhich dataset would you like to use?\n1. Small dataset\n2. Large dataset\nEnter choice (1 or 2), or 'q' to quit: ")
-        dataset_choice = input()
-        if dataset_choice == '1':
+        if (dataset_choice := input()) == '1':
             data = np.loadtxt(r'small-test-dataset.txt')
             return data
         elif dataset_choice == '2':
